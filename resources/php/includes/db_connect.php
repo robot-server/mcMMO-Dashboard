@@ -20,7 +20,9 @@ try {
     if (str_contains($e->getMessage(), 'could not find driver')) {
         echo "{\"error\":\"Could not find php ".$config['db_driver']." driver\"}";
     } else {
-        echo "{\"error\":\"".json_encode($e->getMessage(), JSON_PRETTY_PRINT)."\"}";
+        // Log the detailed error server-side only; never expose DB internals to the client
+        error_log('Database connection error: ' . $e->getMessage());
+        echo "{\"error\":\"A database error occurred. Please contact the administrator.\"}";
     }
     exit;
 }

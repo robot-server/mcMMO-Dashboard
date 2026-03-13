@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once "resources/php/includes/security_headers.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,8 +19,9 @@ session_start();
 <?php require "resources/php/includes/header.php" ?>
 <?php
 if(isset($_GET["player_1"]) || isset($_GET["player_2"])){
-    $player_1 = $_GET["player_1"];
-    $player_2 = $_GET["player_2"];
+    // Sanitize user input before embedding into HTML/JS context
+    $player_1 = htmlspecialchars($_GET["player_1"] ?? '', ENT_QUOTES, 'UTF-8');
+    $player_2 = htmlspecialchars($_GET["player_2"] ?? '', ENT_QUOTES, 'UTF-8');
     echo "<script>let from_url = true; let player_1_from_url = ".json_encode($player_1).";let player_2_from_url = ".json_encode($player_2)."</script>";
 }else{
     echo "<script>let from_url = false;</script>";

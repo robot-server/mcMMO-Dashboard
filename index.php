@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once "resources/php/includes/security_headers.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
